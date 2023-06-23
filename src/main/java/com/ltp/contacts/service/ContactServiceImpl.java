@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ltp.contacts.pojo.Contact;
@@ -14,6 +15,9 @@ public class ContactServiceImpl implements ContactService {
 
     @Autowired
     private ContactRepository contactRepository;
+
+    @Value("${welcome.message}")
+    private String welcomeMessage;
 
     @Override
     public Contact getContactById(String id) {
@@ -46,6 +50,10 @@ public class ContactServiceImpl implements ContactService {
             .filter(index -> contactRepository.getContacts().get(index).getId().equals(id))
             .findFirst()
             .orElseThrow();
+    }
+
+    public String welcome(){
+        return welcomeMessage;
     }
 
 }
